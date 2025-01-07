@@ -8,6 +8,8 @@ class PostsController < ApplicationController
 
   # GET /posts/1 or /posts/1.json
   def show
+    @comment = Comment.new 
+    @comments = @post.comments 
   end
 
   # GET /posts/new
@@ -49,10 +51,9 @@ class PostsController < ApplicationController
 
   # DELETE /posts/1 or /posts/1.json
   def destroy
-    @post.destroy!
-
+    @post.destroy
     respond_to do |format|
-      format.html { redirect_to posts_path, status: :see_other, notice: "Post was successfully destroyed." }
+      format.html { redirect_to posts_url, notice: 'O post foi removido com sucesso.' }
       format.json { head :no_content }
     end
   end
