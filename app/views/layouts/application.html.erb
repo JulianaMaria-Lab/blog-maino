@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
+    <link href="/assets/favicon.ico" rel="icon" type="image/x-icon" />
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    
     <%= yield :head %>
 
     <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
@@ -18,10 +20,34 @@
     <link rel="apple-touch-icon" href="/icon.png">
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+
   </head>
 
   <body>
-    <%= yield %>
+    <div class='bg-primary text-white text-center mb-4 p-4'>
+      <%= link_to root_path, class: 'text-white' do %>
+        <h1 class='display-4'>Blog Mainô</h1>
+      <% end %>
+
+      <p class='lead'>Bem-vindo!</p>
+    </div>
+
+    <div class="container">
+      <% flash.each do |type, message| %>
+        <div class='alert alert-<%= type == 'alert' ? 'danger' : 'success' %> alert-dismissible fade show' role='alert'>
+          <%= message %>
+          <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+            <span aria-hidden='true'>&times;</span>
+          </button>
+        </div>
+      <% end %>
+      
+      <%= yield %>
+    </div>
+  
+    <footer class='bg-primary text-white text-center mt-5 p-4'>
+      Copyright © Juliana Maria <%= Date.current.year %>.
+    </footer>
   </body>
 </html>
